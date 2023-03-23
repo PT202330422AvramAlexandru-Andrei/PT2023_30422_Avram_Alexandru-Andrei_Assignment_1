@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import java.lang.String?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.App.MainController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+
+    <HBox alignment="CENTER">
+        <Label fx:id="poly1"/>
+        <TextField>
+            <text>
+                <String fx:value="poly1"/>
+            </text>
+        </TextField>
+        <Button text="Hello!" onAction="#onHelloButtonClick"/>
+        <Button text="Goodbye!" onAction="#onByeButtonClick"/>
+    </HBox>
+
+    <HBox>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Button text="1" onAction="#button"/>
+                <Button text="2" onAction="#button"/>
+                <Button text="3" onAction="#button"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button text="4" onAction="#button"/>
+                <Button text="5" onAction="#button"/>
+                <Button text="6" onAction="#button"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button text="7" onAction="#button"/>
+                <Button text="8" onAction="#button"/>
+                <Button text="9" onAction="#button"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button text="0" onAction="#button"/>
+            </HBox>
+        </VBox>
+
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Button text="+" onAction="#button"/>
+                <Button text="-" onAction="#button"/>
+                <Button text="*" onAction="#button"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button text="/" onAction="#button"/>
+                <Button text="^" onAction="#button"/>
+                <Button text="." onAction="#button"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button text="x" onAction="#button"/>
+                <Button text="del" onAction="#button"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+</VBox>
