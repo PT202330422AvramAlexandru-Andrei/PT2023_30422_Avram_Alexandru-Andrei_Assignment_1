@@ -1,5 +1,6 @@
 package Logic;
 
+import Model.BadStringException;
 import Model.Polynomial;
 
 import java.util.HashMap;
@@ -79,6 +80,9 @@ public class PolynomialController {
             int highestMatchingExponent = Integer.MIN_VALUE;
             double highestMatchingCoefficient = 0;
             for (Map.Entry<Integer, Double> divisorTerm : polynomial2.monomials.entrySet()) {
+                if (divisorTerm.getValue() == 0) {
+                    return null;
+                }
                 int divisorExponent = divisorTerm.getKey();
                 double divisorCoefficient = divisorTerm.getValue();
 
@@ -99,8 +103,9 @@ public class PolynomialController {
         return result;
     }
 
-    public Polynomial differentiatePolynomial(Polynomial polynomial) {
+    public Polynomial differentiatePolynomial(Polynomial polynomial) throws BadStringException {
         Polynomial result = new Polynomial();
+
 
         for (Map.Entry<Integer, Double> entry : polynomial.monomials.entrySet()) {
             if (entry.getKey() != 0) {

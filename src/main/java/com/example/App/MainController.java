@@ -1,6 +1,8 @@
 package com.example.App;
 
 import Logic.PolynomialController;
+import Model.BadStringException;
+import Model.DivideByZeroException;
 import Model.Polynomial;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -21,7 +23,7 @@ public class MainController {
     }
 
     @FXML
-    protected void add() {
+    protected void add() throws BadStringException {
         String input1 = poly1_text.getText();
         String input2 = poly2_text.getText();
 
@@ -36,7 +38,7 @@ public class MainController {
     }
 
     @FXML
-    protected void subtract() {
+    protected void subtract() throws BadStringException {
         String input1 = poly1_text.getText();
         String input2 = poly2_text.getText();
 
@@ -51,7 +53,7 @@ public class MainController {
     }
 
     @FXML
-    protected void multiply() {
+    protected void multiply() throws BadStringException {
         String input1 = poly1_text.getText();
         String input2 = poly2_text.getText();
 
@@ -66,7 +68,7 @@ public class MainController {
     }
 
     @FXML
-    protected void divide() {
+    protected void divide() throws DivideByZeroException, BadStringException {
         String input1 = poly1_text.getText();
         String input2 = poly2_text.getText();
 
@@ -77,12 +79,24 @@ public class MainController {
         Polynomial p3 = new Polynomial();
 
         p3 = pc.dividePolynomials(p1, p2);
-        result.setText(p3.stringOutput());
+        if (p3 == null) {
+            result.setText("Division by 0 not allowed!!!");
+            throw new DivideByZeroException("Division by 0");
+        }
+        else {
+            result.setText(p3.stringOutput());
+        }
     }
 
     @FXML
-    protected void differentiate() {
+    protected void differentiate() throws BadStringException {
         String input1 = poly1_text.getText();
+
+
+        if (poly1_text.getText().isEmpty()) {
+            result.setText("Empty string. Please enter a polynomial in the first field.");
+            throw new BadStringException("Empty string");
+        }
 
         PolynomialController pc = new PolynomialController();
 
@@ -94,8 +108,13 @@ public class MainController {
     }
 
     @FXML
-    protected void integrate() {
+    protected void integrate() throws BadStringException {
         String input1 = poly1_text.getText();
+
+        if (poly1_text.getText().isEmpty()) {
+            result.setText("Empty string. Please enter a polynomial in the first field.");
+            throw new BadStringException("Empty string");
+        }
 
         PolynomialController pc = new PolynomialController();
 

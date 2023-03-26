@@ -21,44 +21,6 @@
             <TextField fx:id="poly2_text"/>
         </VBox>
     </VBox>
-    <HBox alignment="CENTER" spacing="30">
-        <VBox alignment="CENTER">
-            <HBox alignment="CENTER" spacing="10">
-                <Button text="1" onAction="#button"/>
-                <Button text="2" onAction="#button"/>
-                <Button text="3" onAction="#button"/>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10">
-                <Button text="4" onAction="#button"/>
-                <Button text="5" onAction="#button"/>
-                <Button text="6" onAction="#button"/>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10">
-                <Button text="7" onAction="#button"/>
-                <Button text="8" onAction="#button"/>
-                <Button text="9" onAction="#button"/>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10">
-                <Button text="0" onAction="#button"/>
-            </HBox>
-        </VBox>
-        <VBox alignment="CENTER">
-            <HBox alignment="CENTER" spacing="10">
-                <Button text="+" onAction="#button"/>
-                <Button text="-" onAction="#button"/>
-                <Button text="*" onAction="#button"/>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10">
-                <Button text="/" onAction="#button"/>
-                <Button text="^" onAction="#button"/>
-                <Button text="." onAction="#button"/>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10">
-                <Button text="x" onAction="#button"/>
-                <Button text="del" onAction="#button"/>
-            </HBox>
-        </VBox>
-    </HBox>
     <VBox alignment="CENTER">
         <Label fx:id="result"/>
         <HBox spacing="20">
@@ -67,7 +29,7 @@
             <Button text="Multiply" onAction="#multiply"/>
             <Button text="Divide" onAction="#divide"/>
             <Button text="Differentiate" onAction="#differentiate"/>
-            <Button text="Integral" onAction="#integrate"/>
+            <Button text="Integrate" onAction="#integrate"/>
         </HBox>
     </VBox>
 </VBox>

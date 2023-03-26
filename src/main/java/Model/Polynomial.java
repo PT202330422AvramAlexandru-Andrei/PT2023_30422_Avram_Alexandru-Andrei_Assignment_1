@@ -29,24 +29,37 @@ public class Polynomial {
 
     public String stringOutput() {
         ArrayList<String> output = new ArrayList<>();
+
         for (int i = this.getDegree(); i >= 0; i--) {
             Double coef = this.monomials.get(i);
+
             if (coef == null) {
                 continue;
             }
+
             String sign = (coef < 0 && i != this.getDegree()) ? " - " : (output.isEmpty() ? "" : " + ");
+
+            System.out.println(sign);
+
             String term = "";
+
             if (coef != 1 || i == 0) {
                 term += String.format("%.2f", Math.abs(coef));
             }
+
             if (i > 0) {
                 term += "x";
                 if (i > 1) {
                     term += "^" + i;
                 }
             }
+
+            if (this.monomials.get(i) < 0) {
+                sign = "-";
+            }
             output.add(sign + term);
         }
+
         if (output.isEmpty()) {
             return "0";
         } else {
@@ -54,7 +67,7 @@ public class Polynomial {
         }
     }
 
-    public Polynomial(String stringPoly) {
+    public Polynomial(String stringPoly) throws BadStringException {
 
         monomials = new HashMap<>();
 
@@ -65,6 +78,11 @@ public class Polynomial {
         for (String term : terms) {
             // parts[0] = coefficient
             // parts[1] = exponent
+
+            if(!term.matches("^[+-]?\\d*(\\.\\d+)?x\\^?\\d*$") && !term.matches("^[+-]?x\\^?\\d*$") && !term.matches("^[+-]?\\d*(\\.\\d+)?$") && !term.matches("^[+-]?x$")) {
+                throw new BadStringException("Invalid term: " + term);
+            }
+
             String[] parts = term.split("x\\^?"); //x\^?
             for (String part : parts) {
                 System.out.println(part);
@@ -78,10 +96,20 @@ public class Polynomial {
             }
 
             if (term.equals("x")) {
-                monomials.put(1, 1.0);
+                if (monomials.containsKey(1)) {
+                    monomials.put(1, monomials.get(1) + 1.0);
+                } else {
+                    monomials.put(1, 1.0);
+                }
+                //monomials.put(1, 1.0);
                 continue;
             } else if (term.equals("-x")) {
-                monomials.put(1, -1.0);
+                if (monomials.containsKey(1)) {
+                    monomials.put(1, monomials.get(1) - 1.0);
+                } else {
+                    monomials.put(1, -1.0);
+                }
+                //monomials.put(1, -1.0);
                 continue;
             }
 
@@ -93,12 +121,11 @@ public class Polynomial {
                     coef = Double.parseDouble(parts[0]);
                     exponent = 0;
                 }
-                /*coef = Double.parseDouble(parts[0]);
-                exponent = 0;*/
             } else if (parts[0].equals("")) {
                 coef = 1.0;
                 exponent = Integer.parseInt(parts[1]);
             } else if (parts[0].equals("-")) {
+
                 coef = -1.0;
                 exponent = Integer.parseInt(parts[1]);
             } else {
@@ -110,9 +137,17 @@ public class Polynomial {
                 exponent = 1;
             }
             System.out.println("Group: " + coef + " " + exponent + "\n\n");
+
+            if (monomials.containsKey(exponent)) {
+                coef += monomials.get(exponent);
+            }
             monomials.put(exponent, coef);
         }
         System.out.println("Here you go: " + monomials + "\n\n");
+    }
+
+    public boolean isZero() {
+        return monomials.isEmpty();
     }
 
     public Map<Integer, Double> getMonomials() {
