@@ -17,11 +17,6 @@ public class MainController {
     @FXML
     TextField poly2_text;
 
-
-    @FXML
-    protected void button() {
-    }
-
     @FXML
     protected void add() throws BadStringException {
         String input1 = poly1_text.getText();
@@ -76,15 +71,16 @@ public class MainController {
 
         Polynomial p1 = new Polynomial(input1);
         Polynomial p2 = new Polynomial(input2);
-        Polynomial p3 = new Polynomial();
+        Polynomial p3[] = new Polynomial[2];
 
         p3 = pc.dividePolynomials(p1, p2);
+
         if (p3 == null) {
             result.setText("Division by 0 not allowed!!!");
             throw new DivideByZeroException("Division by 0");
         }
         else {
-            result.setText(p3.stringOutput());
+            result.setText(p3[0].stringOutput() + "" + p3[1].stringOutput());
         }
     }
 

@@ -17,7 +17,7 @@ public class Polynomial {
         return monomials.keySet().stream().max(Integer::compareTo).orElse(0);
     }
 
-    public void print() {
+    /*public void print() {
         for (Map.Entry<Integer, Double> i : this.monomials.entrySet()) {
             if (i.getKey().equals(0)) {
                 System.out.println(i.getValue());
@@ -25,7 +25,7 @@ public class Polynomial {
                 System.out.println(String.format("%.2f", i.getValue()) + " * x^" + i.getKey());
             }
         }
-    }
+    }*/
 
     public String stringOutput() {
         ArrayList<String> output = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Polynomial {
                 continue;
             }
 
-            String sign = (coef < 0 && i != this.getDegree()) ? " - " : (output.isEmpty() ? "" : " + ");
+            String sign = (coef < 0 && i != this.getDegree()) ? "-" : (output.isEmpty() ? "" : "+");
 
             System.out.println(sign);
 
@@ -67,6 +67,10 @@ public class Polynomial {
         }
     }
 
+    public Polynomial(Polynomial polynomial) {
+        this.monomials = new HashMap<>(polynomial.monomials);
+    }
+
     public Polynomial(String stringPoly) throws BadStringException {
 
         monomials = new HashMap<>();
@@ -76,11 +80,13 @@ public class Polynomial {
         String[] terms = stringPoly.split("(?=[+-])");
 
         for (String term : terms) {
-            // parts[0] = coefficient
-            // parts[1] = exponent
 
-            if(!term.matches("^[+-]?\\d*(\\.\\d+)?x\\^?\\d*$") && !term.matches("^[+-]?x\\^?\\d*$") && !term.matches("^[+-]?\\d*(\\.\\d+)?$") && !term.matches("^[+-]?x$")) {
+            if (!term.matches("^[+-]?\\d*(\\.\\d+)?x\\^?\\d*$") && !term.matches("^[+-]?x\\^?\\d*$") && !term.matches("^[+-]?\\d*(\\.\\d+)?$") && !term.matches("^[+-]?x$")) {
                 throw new BadStringException("Invalid term: " + term);
+            }
+
+            if (term.isEmpty()) {
+                continue;
             }
 
             String[] parts = term.split("x\\^?"); //x\^?
@@ -91,17 +97,12 @@ public class Polynomial {
             Integer exponent;
             Double coef;
 
-            if (term.isEmpty()) {
-                continue;
-            }
-
-            if (term.equals("x")) {
+            if (term.equals("x") || term.equals("+x")) {
                 if (monomials.containsKey(1)) {
                     monomials.put(1, monomials.get(1) + 1.0);
                 } else {
                     monomials.put(1, 1.0);
                 }
-                //monomials.put(1, 1.0);
                 continue;
             } else if (term.equals("-x")) {
                 if (monomials.containsKey(1)) {
@@ -109,24 +110,24 @@ public class Polynomial {
                 } else {
                     monomials.put(1, -1.0);
                 }
-                //monomials.put(1, -1.0);
                 continue;
-            }
-
-            if (parts.length == 1) {
-                if (parts[0].equals("+")) {
-                    coef = 1.0;
-                    exponent = 0;
-                } else {
-                    coef = Double.parseDouble(parts[0]);
-                    exponent = 0;
-                }
-            } else if (parts[0].equals("")) {
+            } else if (parts[0].equals("+")) {
                 coef = 1.0;
                 exponent = Integer.parseInt(parts[1]);
+                monomials.put(exponent, coef);
+                continue;
             } else if (parts[0].equals("-")) {
 
                 coef = -1.0;
+                exponent = Integer.parseInt(parts[1]);
+                monomials.put(exponent, coef);
+                continue;
+            } else if (parts.length == 1) {
+                coef = Double.parseDouble(parts[0]);
+                exponent = 0;
+                //}
+            } else if (parts[0].equals("")) {
+                coef = 1.0;
                 exponent = Integer.parseInt(parts[1]);
             } else {
                 coef = Double.parseDouble(parts[0]);
@@ -148,6 +149,10 @@ public class Polynomial {
 
     public boolean isZero() {
         return monomials.isEmpty();
+    }
+
+    public Double leadingCoeff() {
+        return monomials.get(this.getDegree());
     }
 
     public Map<Integer, Double> getMonomials() {

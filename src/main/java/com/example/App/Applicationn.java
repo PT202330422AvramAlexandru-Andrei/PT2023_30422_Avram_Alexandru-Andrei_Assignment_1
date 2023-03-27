@@ -16,7 +16,7 @@ public class Applicationn extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view.fxml"));
         Scene scene = new Scene(root, 600, 350);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setTitle("AAA's Polynomial Calculator");
         stage.setScene(scene);
         stage.show();

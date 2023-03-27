@@ -2,13 +2,14 @@ package Logic;
 
 import Model.BadStringException;
 import Model.Polynomial;
+import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PolynomialController {
 
-    public Polynomial addPolynomials(Polynomial polynomial1, Polynomial polynomial2) {
+    public static Polynomial addPolynomials(Polynomial polynomial1, Polynomial polynomial2) {
         Map<Integer, Double> result = new HashMap<>(polynomial1.monomials);
 
         for (Map.Entry<Integer, Double> entry : polynomial2.monomials.entrySet()) {
@@ -24,7 +25,7 @@ public class PolynomialController {
         return new Polynomial(result);
     }
 
-    public Polynomial subtractPolynomials(Polynomial polynomial1, Polynomial polynomial2) {
+    public static Polynomial subtractPolynomials(Polynomial polynomial1, Polynomial polynomial2) {
         Polynomial result = new Polynomial();
 
         for (Map.Entry<Integer, Double> entry : polynomial1.monomials.entrySet()) {
@@ -53,7 +54,7 @@ public class PolynomialController {
         return result;
     }
 
-    public Polynomial multiplyPolynomials(Polynomial polynomial1, Polynomial polynomial2) {
+    public static Polynomial multiplyPolynomials(Polynomial polynomial1, Polynomial polynomial2) {
         Polynomial result = new Polynomial();
 
         for (Map.Entry<Integer, Double> entry1 : polynomial1.monomials.entrySet()) {
@@ -70,8 +71,10 @@ public class PolynomialController {
         return result;
     }
 
-    public Polynomial dividePolynomials(Polynomial polynomial1, Polynomial polynomial2) {
-        Polynomial result = new Polynomial();
+    public static Polynomial[] dividePolynomials(Polynomial polynomial1, Polynomial polynomial2) {
+        Polynomial[] result = new Polynomial[2];
+        Polynomial remainder = new Polynomial();
+        Polynomial quotient = new Polynomial();
 
         for (Map.Entry<Integer, Double> dividendTerm : polynomial1.monomials.entrySet()) {
             int dividendExponent = dividendTerm.getKey();
@@ -98,12 +101,18 @@ public class PolynomialController {
 
             double quotientCoefficient = dividendCoefficient / highestMatchingCoefficient;
             int quotientExponent = dividendExponent - highestMatchingExponent;
-            result.monomials.put(quotientExponent, quotientCoefficient);
+            quotient.monomials.put(quotientExponent, quotientCoefficient);
         }
+        remainder = subtractPolynomials(polynomial1, multiplyPolynomials(quotient, polynomial2));
+
+        result[0] = quotient;
+        result[1] = remainder;
+
         return result;
     }
 
-    public Polynomial differentiatePolynomial(Polynomial polynomial) throws BadStringException {
+
+    public static Polynomial differentiatePolynomial(Polynomial polynomial) throws BadStringException {
         Polynomial result = new Polynomial();
 
 
@@ -119,7 +128,7 @@ public class PolynomialController {
         return result;
     }
 
-    public Polynomial integratePolynomial(Polynomial polynomial) {
+    public static Polynomial integratePolynomial(Polynomial polynomial) {
         Polynomial result = new Polynomial();
 
         for (Map.Entry<Integer, Double> entry : polynomial.monomials.entrySet()) {
