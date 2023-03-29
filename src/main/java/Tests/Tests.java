@@ -13,6 +13,14 @@ import org.junit.Test;
 public class Tests {
 
     @Test
+    public void testPoly() throws BadStringException {
+        Polynomial p1 = new Polynomial("3x^2 + 2x + 1");
+
+
+        assertEquals("3.00x^2+2.00x+1.00", p1.stringOutput());
+    }
+
+    @Test
     public void testAddPolynomials() throws BadStringException {
         Polynomial p1 = new Polynomial("3x^2 + 2x + 1");
         Polynomial p2 = new Polynomial("2x^2 - 4x + 3");
@@ -42,7 +50,7 @@ public class Tests {
         assertEquals("6.00x^4-8.00x^3+3.00x^2+2.00x+3.00", result.stringOutput());
     }
 
-    @Test
+    /*@Test
     public void testDividePolynomials() throws BadStringException {
         Polynomial p1 = new Polynomial("6x^4 - 8x^3 + x^2 + 2x + 3");
         Polynomial p2 = new Polynomial("3x^2 + 2x + 1");
@@ -51,6 +59,17 @@ public class Tests {
         System.out.println(result[0].stringOutput() + " | " + result[1].stringOutput());
 
         //assertEquals("2.00x^2-4.00x+3.00", result.getKey().stringOutput());
+    }*/
+
+    @Test
+    public void testDividePolynomials() throws BadStringException {
+        Polynomial p1 = new Polynomial("x^2 - 1");
+        Polynomial p2 = new Polynomial("x + 1");
+
+        Polynomial result[] = PolynomialController.dividePolynomials(p1, p2);
+        //System.out.println(result[0].stringOutput() + " | " + result[1].stringOutput());
+
+        assertEquals("x-1.00 | 0", result[0].stringOutput() + " | " + result[1].stringOutput());
     }
 
     @Test
