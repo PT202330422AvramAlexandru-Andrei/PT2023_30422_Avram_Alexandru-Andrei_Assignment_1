@@ -17,23 +17,13 @@ public class Polynomial {
         return monomials.keySet().stream().max(Integer::compareTo).orElse(0);
     }
 
-    /*public void print() {
-        for (Map.Entry<Integer, Double> i : this.monomials.entrySet()) {
-            if (i.getKey().equals(0)) {
-                System.out.println(i.getValue());
-            } else {
-                System.out.println(String.format("%.2f", i.getValue()) + " * x^" + i.getKey());
-            }
-        }
-    }*/
-
     public String stringOutput() {
         ArrayList<String> output = new ArrayList<>();
 
         for (int i = this.getDegree(); i >= 0; i--) {
             Double coef = this.monomials.get(i);
 
-            if (coef == null) {
+            if (coef == null || coef == 0) {
                 continue;
             }
 
@@ -89,7 +79,7 @@ public class Polynomial {
                 continue;
             }
 
-            String[] parts = term.split("x\\^?"); //x\^?
+            String[] parts = term.split("x\\^?");
             for (String part : parts) {
                 System.out.println(part);
             }

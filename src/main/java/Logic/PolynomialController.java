@@ -2,7 +2,6 @@ package Logic;
 
 import Model.BadStringException;
 import Model.Polynomial;
-import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;

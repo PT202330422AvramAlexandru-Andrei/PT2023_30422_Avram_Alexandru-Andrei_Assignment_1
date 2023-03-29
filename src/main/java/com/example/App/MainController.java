@@ -80,7 +80,7 @@ public class MainController {
             throw new DivideByZeroException("Division by 0");
         }
         else {
-            result.setText(p3[0].stringOutput() + "" + p3[1].stringOutput());
+            result.setText(p3[0].stringOutput() + " | " + p3[1].stringOutput());
         }
     }
 
